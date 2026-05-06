@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>AI视频生成器</title>
+</head>
+
+<body style="text-align:center;margin-top:50px;">
+
+<h1>🎬 AI 视频生成器</h1>
+
+<input id="text" placeholder="输入内容">
+<button onclick="gen()">生成</button>
+
+<br><br>
+
+<video id="video" controls width="400"></video>
+
+<script>
+async function gen() {
+
+    const text = document.getElementById("text").value;
+
+    const res = await fetch("http://127.0.0.1:5000/api/generate", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({text})
+    });
+
+    const data = await res.json();
+
+    document.getElementById("video").src =
+        "http://127.0.0.1:5000" + data.video_url;
+}
+</script>
+
+</body>
+</html>
